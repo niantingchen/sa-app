@@ -7,7 +7,7 @@
     <link rel="icon" type="image/x-icon" href="../img/logo.png" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="../css/footer.css">
     <title>商城</title>
   </head>
   <style>
@@ -18,10 +18,7 @@
       background-color: 	#408080;
       color: aliceblue;
     }
-    .store-name{
-      size: 20%;
-      text-align: center;
-    }
+  
     .store-btn {
       display: flex;
       justify-content: center; 
@@ -44,7 +41,7 @@
             width: 100%;
             
         }
-        .nav{
+        .nav1{
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -58,12 +55,68 @@
             justify-content: space-around;
             align-items: center;
         }
-   
+        .title{
+            padding: 20px 30px;
+            background-color: beige;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+        
+        .ti-icon{
+            padding-top: 9px;
+            display: flex;
+            padding-left: 30px;
+        }
+
+        .ti-icon >img{
+            width: 35px;
+            height: 35px;
+        }
+        
+        .ti-icon>p{
+            padding-top: 5px;
+            padding-left: 20px;
+            font-size: 20px;
+            color:#127436;
+            font-weight: 900;
+        }
+        
+        .d-flex>input{
+            outline-style: none;
+            width: 70px;
+            height: 30px;
+            font-size: 15px;
+            border:1px solid #96a48b;
+            
+        }
+        .d-flex>input::-webkit-input-placeholder{
+            text-align: center;
+        }
+        .btn{
+            width: 70px;
+            height: 30px;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
   </style>
-  <body><br>
-    <h1 class="store-name">
-      商店<hr>
-    </h1>
+  <body>
+    <div class="title">
+      <div class="ti-icon">
+          <img src="../img/shop.png" alt="">
+          <p>店家</p>
+      </div>
+    
+      <nav class="navbar navbar-expand-lg navbar-light">              
+          <form class="d-flex">
+              <input class="form-control me-2" type="search" placeholder="..." aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">搜尋</button>
+          </form>
+      </nav>
+    </div>
     <div class="container">
       <div class="row row-cols-3 row-cols-lg-5 g-2 g-lg-3">
         <div class="col">
@@ -370,24 +423,44 @@
       </div>
     </div>
 
-     <!--固定欄位-->
-     <footer>         
-      <ul class="nav">
-          <li>
-              <a href="../html/index.html"><p class="navitem">首頁</p></a>
-          </li>
-          <li>
-              <a href="../html/shop.html"><p class="navitem">店家</p></a>
-          </li>
-          <li>
-              <a href="../html/detail.html"><p class="navitem">商城</p></a>
-          </li>
-          <li>
-              <a href="../html/friends.html"><p class="navitem">好友</p></a>
-          </li>
-          <li>
-              <a href="../html/member.html"><p class="navitem">會員</p></a>
-          </li>
+     
+    <!--固定欄位-->
+    <footer>         
+      <ul class="nav1">
+          <a href="../index.html" class="navitem">
+              <li>
+                  <img src="../img/home-button.png" alt="">
+                  <p>首頁</p>
+              </li>
+          </a>
+
+          <a href="../html/shop.html" class="navitem">
+              <li>
+                  <img src="../img/shop.png" alt="">
+                  <p>店家</p>
+              </li>
+          </a>
+          
+          <a href="../html/store.html" class="navitem">
+              <li>
+                  <img src="../img/shopping-cart.png" alt="">
+                  <p>商城</p>
+              </li>
+          </a>
+          
+          <a href="../html/friends.html" class="navitem">
+              <li>
+                  <img src="../img/dog.png" alt="">
+                  <p>好友</p>
+              </li>
+          </a>
+
+          <a href="../html/member.html" class="navitem">
+              <li>
+                  <img src="../img/user.png" alt="">
+                  <p>會員</p>
+              </li>
+          </a>   
       </ul>
   </footer>
 

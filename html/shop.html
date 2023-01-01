@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/footer.css">
-
+    <link rel="icon" type="image/x-icon" href="../img/logo.png" />
     <title>店家</title>
     <style>
 
@@ -92,7 +92,30 @@
             height: 40px;
             
         }
-
+        
+        footer{
+            padding: 20px;
+            background-color: beige;
+            position:fixed;
+            bottom: 0;
+            width: 100%;
+            
+        }
+        .nav1{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .navitem{
+            width: 50px;
+            height: 50px;
+            background-color: antiquewhite;
+            border-radius: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+      
         
     </style>
   </head>
@@ -283,46 +306,45 @@
         </div>
 
     </main>
+  <!--固定欄位-->
+  <footer>         
+    <ul class="nav1">
+        <a href="../index.html" class="navitem">
+            <li>
+                <img src="../img/home-button.png" alt="">
+                <p>首頁</p>
+            </li>
+        </a>
 
-    <!--固定欄位-->
-    <footer>         
-        <ul class="nav">
-            <a href="../index.html" class="navitem">
-                <li>
-                    <img src="../img/home-button.png" alt="">
-                    <p>首頁</p>
-                </li>
-            </a>
+        <a href="../html/shop.html" class="navitem">
+            <li>
+                <img src="../img/shop.png" alt="">
+                <p>店家</p>
+            </li>
+        </a>
+        
+        <a href="../html/store.html" class="navitem">
+            <li>
+                <img src="../img/shopping-cart.png" alt="">
+                <p>商城</p>
+            </li>
+        </a>
+        
+        <a href="../html/friends.html" class="navitem">
+            <li>
+                <img src="../img/dog.png" alt="">
+                <p>好友</p>
+            </li>
+        </a>
 
-            <a href="../html/shop.html" class="navitem">
-                <li>
-                    <img src="../img/shop.png" alt="">
-                    <p>店家</p>
-                </li>
-            </a>
-            
-            <a href="../html/store.html" class="navitem">
-                <li>
-                    <img src="../img/shopping-cart.png" alt="">
-                    <p>商城</p>
-                </li>
-            </a>
-            
-            <a href="../html/friends.html" class="navitem">
-                <li>
-                    <img src="../img/dog.png" alt="">
-                    <p>好友</p>
-                </li>
-            </a>
-
-            <a href="../html/member.html" class="navitem">
-                <li>
-                    <img src="../img/user.png" alt="">
-                    <p>會員</p>
-                </li>
-            </a>   
-        </ul>
-    </footer>
+        <a href="../html/member.html" class="navitem">
+            <li>
+                <img src="../img/user.png" alt="">
+                <p>會員</p>
+            </li>
+        </a>   
+    </ul>
+</footer>
 
 
 

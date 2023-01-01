@@ -15,7 +15,7 @@ footer{
     z-index: 2;
     
 }
-.nav{
+.nav1{
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -38,4 +38,7 @@ footer{
 .navitem li>p{
     font-size: 5px;
     text-align: center;
+}
+ul,ui{
+    list-style-type: none;
 }
