@@ -13,62 +13,102 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/login.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="../img/logo.png" />
+    
+      <script type="text/javascript">
+              window.onload=function(){
+                var send=document.getElementById('send'),
+                  times=60,
+                  timer=null;
+                send.onclick=function(){
+                 // 計時開始
+                 var that = this;
+                  this.disabled=true;
+                  timer = setInterval(function(){
+                    times --;
+                    that.value = times + "秒後重試";
+                    if(times <= 0){
+                      that.disabled =false;
+                      that.value = "傳送驗證碼";
+                      clearInterval(timer);
+                      times = 60;
+                    }
+                    //console.log(times);
+                  },1000);  
+                }  
+              } 
+             
+          function ShowPwd() {
+            var x = document.getElementById("password");
+               if (x.type === "password") {
+                   x.type = "text";
+              }
+               else {
+                   x.type = "password";
+               }
+          }      
+              </script>
     </head>
     <body id="page-top">
       
         <!-- Contact Section-->
         <section class="page-section" id="contact">
+        
             <div class="container">
                 <!-- Contact Section Heading-->
                 <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">register</h2>
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><img src="../img/seaweed.jpg"></div>
+                    <div class="divider-custom-icon"><img src="../img/logo.png"></div>
                     <div class="divider-custom-line"></div>
                 </div>
-                <!-- Contact Section Form-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <form action="card.html" id="contactForm" data-sb-form-api-token="API_TOKEN" >
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                               
-                                <input class="form-control" id="account" type="text"  placeholder="帳號" required />
-                                <label for="account">身分證</label>
-                         
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="name" required />
-                                <label for="name">姓名</label>
-                               
-                            </div>
-                                <div class="form-floating mb-3">
-                                <input class="form-control" id="password" type="password" placeholder="xxx" required />
-                                <label for="password">密碼</label>
-                               
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" required />
-                                <label for="phone">電話</label>
-                               
-                            </div>
-                            <div class="get">
-                           <input type="submit" value="取得驗證碼">
-                         </div>
-                            <!-- Phone number input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="code" type="text" placeholder="xxxx" required />
-                                <label for="code">驗證碼</label>
-                              
-                            </div>
-                        <div class="inputBox">
-                            <input type="submit" value="下一步"> 
-                            </div>
-                            
-                        </form>
+                <form name="register" method="post" action="../jsp/register_detail.jsp">
+                    <!-- Contact Section-->
+                    <section class="page-section" id="contact">
+                      
+                            <!-- Contact Section Form-->
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8 col-xl-7">
+                                   
+                                        <!-- Name input-->
+                                        <div class="form-floating mb-3">
+                                           
+                                            <input class="form-control" name="memberid" id="account" type="text"  placeholder="帳號" required />
+                                            <label for="account">身分證</label>
+                                     
+                                        </div>
+                                        <!-- Email address input-->
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="name" name="name" type="text" placeholder="name" required />
+                                            <label for="name">姓名</label>
+                                           
+                                        </div>
+                                            <div class="form-floating mb-3">
+                                            <input class="form-control" id="password" name="password" type="password" placeholder="xxx" required />
+                                            <label for="password">密碼</label>
+                                            <input type="checkbox" onclick="ShowPwd()">顯示密碼
+                                        </div>
+                                        <!-- Email address input-->
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="phone" name="phone" type="tel" placeholder="(123) 456-7890" required />
+                                            <label for="phone">電話</label>
+                                           
+                                        </div>
+                                       <div class="get">
+                                       <input type="submit" id="send" value="傳送驗證碼">
+                                     </div>
+                                        <!-- Phone number input-->
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" id="code" type="text" placeholder="xxxx" required />
+                                            <label for="code">驗證碼</label>
+                                          
+                                        </div>
+                                         
+                                    <div class="inputBox">
+                                        <input type="submit" value="下一步">
+                                        </div>
+                                        
+                                    </form>
                     </div>
                 </div>
             </div>

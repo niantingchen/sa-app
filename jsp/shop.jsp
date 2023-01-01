@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,6 +12,13 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="icon" type="image/x-icon" href="../img/logo.png" />
     <title>店家</title>
+    <%
+    if(session.getAttribute("memberid")==null)
+        out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+    else
+        out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+  
+  %>
     <style>
 
         .title{
@@ -118,6 +127,47 @@
       
         
     </style>
+     <%
+     try{
+     Class.forName("com.mysql.jdbc.Driver");
+     try{
+     String url="jdbc:mysql://localhost";
+     Connection con=DriverManager.getConnection(url,"root","12345678");
+     String sql="use question";
+     con.createStatement().execute(sql);
+     %>
+     <%	 
+       if(session.getAttribute("memberid") != null ){
+          sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+          ResultSet rs=con.createStatement().executeQuery(sql);
+          String  name="",memberid="";
+          while(rs.next()){
+             name=rs.getString("name");
+             memberid=rs.getString("memberid");
+                     
+          }
+          con.close();
+         %>
+         <%
+        }
+        else{
+            
+            con.close();//結束資料庫連結
+        %>
+        
+    
+        <%
+        }
+            }
+            catch (SQLException sExec) {
+                   out.println("SQL錯誤"+sExec.toString());
+            }
+        }
+        catch (ClassNotFoundException err) {
+           out.println("class錯誤"+err.toString());
+        }
+            
+        %>	
   </head>
   <body>
       

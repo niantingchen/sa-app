@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>常見問題</title>
+        <title>我的卡片</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="../img/logo.png" />
         <!-- Bootstrap icons-->
@@ -13,6 +15,13 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/style_1.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/footer.css">
+ <%
+        if(session.getAttribute("memberid")==null)
+            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+      
+      %>
         <style>           
             footer{
                 padding: 20px;
@@ -39,11 +48,12 @@
             </style>
     </head>
     <body>
+        
         <!-- Navigation-->
         <div class="fixed-bottom">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
-                 <!--<a class="navbar-brand" href="#!">Start Bootstrap</a>
+                       <!--<a class="navbar-brand" href="#!">Start Bootstrap</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="nav nav-tabs">
@@ -76,7 +86,7 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <!--<img class="display-4 fw-bolder" src="assets/logo.jpg">-->
-                    <p class="lead fw-normal text-white-50 mb-0">常見問題</p>
+                    <p class="lead fw-normal text-white-50 mb-0">我的卡片</p>
                     <!--<div class="point">
                         <p class="lead fw-normal-1 text-white-51 mb-0">帳號:M123xxxxxx</p>
                     </div>
@@ -92,9 +102,12 @@
                     <div class="col mb-5">
                         <!--<div class="card h-100">-->
                             <div class="change" style="border-width: 2px; border-style: outset; border-color: #F0F0F0; border-radius: 10px;">
-                                <p style="font-size: 25px;">如何獲得點數?</p>
-                                <p>使用APP中商店之服務，完成後依據碳足跡，給予相對應的點數。</p>
-                                   
+                                <p>銀行代碼</p>
+                                <p><input type="text" placeholder="請輸入銀行代碼" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
+                                <p>信用卡號</p>
+                                <p><input type="text" placeholder="請輸入信用卡號" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
+                                <p>信用卡有效日期</p>
+                                <p><input type="date" placeholder="MM/YY" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
                             <!--Product image-->
                             <!--<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
                             <!-- Product details
@@ -114,9 +127,6 @@
                         </div>
                     </div>
                     <div class="col mb-5">
-                        <div class="change" style="border-width: 2px; border-style: outset; border-color: #F0F0F0; border-radius: 10px;">
-                            <p style="font-size: 25px;">點數如何使用?</p>
-                            <p>可以在商店中購買額外服務，並換成兌換券。</p>
                         <!--<div class="card h-100">
                              Sale badge
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
@@ -198,8 +208,7 @@
                         </div>
                     </div>-->
                    <div class="col mb-5">
-                       <p style="text-align: center;">找不到您的答案嗎?</p>
-                       <a href="contactus.html" style="margin-left: 43%;">聯絡我們</a>
+                       <input type="submit" value="儲存" style="margin-left: 43%; font-size: 20px;">
                          <!--<div class="card h-100">
                              Sale badge
                             <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
@@ -300,8 +309,8 @@
                 </div>
             </div>-->
         </section>
-          <!--固定欄位-->
-          <footer>         
+        <!--固定欄位-->
+        <footer>         
             <ul class="nav1">
                 <a href="../index.jsp" class="navitem">
                     <li>

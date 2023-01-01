@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -11,6 +13,13 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/login.css" rel="stylesheet" />
         <link rel="icon" type="image/x-icon" href="../img/logo.png" />
+        <%
+        if(session.getAttribute("memberid")==null)
+            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+      
+      %>
     </head>
     <body id="page-top">
       

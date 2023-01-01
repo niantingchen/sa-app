@@ -72,6 +72,27 @@
                 </div>
             </div>
         </nav>
+        <%
+        try{
+        Class.forName("com.mysql.jdbc.Driver");
+        try{
+        String url="jdbc:mysql://localhost";
+        Connection con=DriverManager.getConnection(url,"root","12345678");
+        String sql="use question";
+        con.createStatement().execute(sql);
+        %>
+        <%	 
+          if(session.getAttribute("memberid") != null ){
+             sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+             ResultSet rs=con.createStatement().executeQuery(sql);
+             String  name="",memberid="";
+             while(rs.next()){
+                name=rs.getString("name");
+                memberid=rs.getString("memberid");
+              
+             }
+             con.close();
+            %>
         <!-- Header-->
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
@@ -79,7 +100,7 @@
                     <!--<img class="display-4 fw-bolder" src="assets/logo.jpg">-->
                     <p class="lead fw-normal text-white-50 mb-0">個人資訊</p>
                     <div class="point">
-                        <p class="lead fw-normal-1 text-white-51 mb-0">帳號:M123xxxxxx</p>
+                        <p class="lead fw-normal-1 text-white-51 mb-0">帳號:<%=memberid%>/p>
                     </div>
                 </div>
             </div>
@@ -93,7 +114,7 @@
                     <div class="col mb-5">
                         <!--<div class="card h-100">-->
                             <div class="change" style="border-width: 2px; border-style: outset; border-color: #F0F0F0; border-radius: 10px;">
-                                <p>密碼</p>
+                                <p>密碼<%=password%></p>
                                 <p><input type="text" placeholder="請輸入新密碼" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
                                 <p>信用卡號</p>
                                 <p><input type="text" placeholder="請輸入新信用卡號" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
@@ -117,6 +138,26 @@
                             </div>
                         </div>
                     </div>
+                    <%
+                }
+                else{
+                    
+                    con.close();//結束資料庫連結
+                %>
+                
+                
+                <%
+                }
+                    }
+                    catch (SQLException sExec) {
+                           out.println("SQL錯誤"+sExec.toString());
+                    }
+                }
+                catch (ClassNotFoundException err) {
+                   out.println("class錯誤"+err.toString());
+                }
+                    
+                %>	
                     <div class="col mb-5">
                         <!--<div class="card h-100">
                              Sale badge
@@ -303,21 +344,21 @@
 <!--固定欄位-->
 <footer>         
     <ul class="nav1">
-        <a href="../index.html" class="navitem">
+        <a href="../index.jsp" class="navitem">
             <li>
                 <img src="../img/home-button.png" alt="">
                 <p>首頁</p>
             </li>
         </a>
 
-        <a href="../html/shop.html" class="navitem">
+        <a href="../jsp/shop.jsp" class="navitem">
             <li>
                 <img src="../img/shop.png" alt="">
                 <p>店家</p>
             </li>
         </a>
         
-        <a href="../html/store.html" class="navitem">
+        <a href="../jsp/store.jsp" class="navitem">
             <li>
                 <img src="../img/shopping-cart.png" alt="">
                 <p>商城</p>
@@ -331,7 +372,7 @@
             </li>
         </a>
 
-        <a href="../html/member.html" class="navitem">
+        <a href="../jsp/member.jsp" class="navitem">
             <li>
                 <img src="../img/user.png" alt="">
                 <p>會員</p>

@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -12,7 +14,13 @@
     <link rel="stylesheet" href="../css/footer.css">
 
     <title>member</title>
-
+    <%
+    if(session.getAttribute("memberid")==null)
+        out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+    else
+        out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+  
+  %>
     <style>
       .title{
         padding: 20px 40px 15px 60px;
@@ -99,15 +107,37 @@
             align-items: center;
         }
     </style>
+     <%
+     try{
+     Class.forName("com.mysql.jdbc.Driver");
+     try{
+     String url="jdbc:mysql://localhost";
+     Connection con=DriverManager.getConnection(url,"root","12345678");
+     String sql="use question";
+     con.createStatement().execute(sql);
+     %>
+     <%	 
+       if(session.getAttribute("memberid") != null ){
+          sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+          ResultSet rs=con.createStatement().executeQuery(sql);
+          String  name="",memberid="";
+          while(rs.next()){
+             name=rs.getString("name");
+             memberid=rs.getString("memberid");
+           
+          }
+          con.close();
+         %>
   </head>
 <body>
+  
 
   <div class="title">
       <div class="icon">
-        <a href="../html/cunzhe.html"><img src="../img/bear.png" alt=""></a>
+        <a href="../html/cunzhe.html"><img src="../img/bear.png" alt="">會員</a>
       </div>
       <div class="ti-txt">
-        <p>NianTing</p>
+        <p><%=name%> </p>
       </div>
       <div class="icon">
         <a href="../jsp/memberall.jsp"><img src="../img/setting.png" alt=""></a>
@@ -188,7 +218,26 @@
         </table>
       </div>
   </main>
+  <%
+}
+else{
+    
+    con.close();//結束資料庫連結
+%>
 
+
+<%
+}
+    }
+    catch (SQLException sExec) {
+           out.println("SQL錯誤"+sExec.toString());
+    }
+}
+catch (ClassNotFoundException err) {
+   out.println("class錯誤"+err.toString());
+}
+    
+%>	
 
 <!--固定欄位-->
 <footer>         

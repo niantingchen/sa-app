@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,6 +11,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="css/footer.css">
     
+    <%
+    if(session.getAttribute("memberid")==null)
+        out.print("<script>alert('請先登入 !');location.href='html/login.html'</script>");
+    else
+        out.println("<a class= 'h' href='jsp/logout.jsp'>登出</a>");
+  
+  %>
 
     <title>首頁</title>
     <style>
@@ -139,6 +148,27 @@
         
         
     </style>
+      <%
+      try{
+      Class.forName("com.mysql.jdbc.Driver");
+      try{
+      String url="jdbc:mysql://localhost";
+      Connection con=DriverManager.getConnection(url,"root","12345678");
+      String sql="use question";
+      con.createStatement().execute(sql);
+      %>
+      <%	 
+        if(session.getAttribute("memberid") != null ){
+           sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+           ResultSet rs=con.createStatement().executeQuery(sql);
+           String  name="",memberid="";
+           while(rs.next()){
+              name=rs.getString("name");
+              memberid=rs.getString("memberid");
+             		 
+           }
+           con.close();
+          %>
   </head>
   <body>
    
@@ -160,7 +190,7 @@
                         <img src="img/bear.png" alt="">
                     </div>
                     <div class="name">
-                        <p>NianTing</p>
+                        <p><%=name%> </p>
                     </div>
     
                     <div class="count">
@@ -179,21 +209,38 @@
             </div>
 
         </a>
+        <%
+    }
+    else{
         
+        con.close();//結束資料庫連結
+    %>
+    
+
+    <%
+    }
+        }
+        catch (SQLException sExec) {
+               out.println("SQL錯誤"+sExec.toString());
+        }
+    }
+    catch (ClassNotFoundException err) {
+       out.println("class錯誤"+err.toString());
+    }
+        
+    %>	
 
         <!--隨機廣告-->
         <div class="shadow p-3 mb-4 bg-body rounded">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="https://fakeimg.pl/350x200/?text=Hello" class=" w-100" alt="...">
+                    <img src="img/globe.png" class=" w-100" alt="...">
                   </div>
                   <div class="carousel-item">
-                    <img src="https://fakeimg.pl/350x200/?text=Hello" class="w-100" alt="...">
+                    <img src="img/number.png" class="w-100" alt="...">
                   </div>
-                  <div class="carousel-item">
-                    <img src="https://fakeimg.pl/350x200/?text=Hello" class="w-100" alt="...">
-                  </div>
+                
                 </div>
             </div>
 
@@ -303,21 +350,21 @@
     <!--固定欄位-->
     <footer>         
         <ul class="nav1">
-            <a href="index.html" class="navitem">
+            <a href="index.jsp" class="navitem">
                 <li>
                     <img src="img/home-button.png" alt="">
                     <p>首頁</p>
                 </li>
             </a>
 
-            <a href="html/shop.html" class="navitem">
+            <a href="jsp/shop.jsp" class="navitem">
                 <li>
                     <img src="img/shop.png" alt="">
                     <p>店家</p>
                 </li>
             </a>
             
-            <a href="html/store.html" class="navitem">
+            <a href="jsp/store.jsp" class="navitem">
                 <li>
                     <img src="img/shopping-cart.png" alt="">
                     <p>商城</p>
@@ -331,7 +378,7 @@
                 </li>
             </a>
 
-            <a href="html/member.html" class="navitem">
+            <a href="jsp/member.jsp" class="navitem">
                 <li>
                     <img src="img/user.png" alt="">
                     <p>會員</p>
