@@ -1,3 +1,5 @@
+<%@page contentType="text/html;charset=utf-8" language="java" import="java.sql.*"%>
+ <%@ page import = "java.io.*"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -87,7 +89,7 @@
             display: flex;
             justify-content: space-around;
         }
-  
+         
         footer{
             padding: 20px;
             background-color: beige;
@@ -118,10 +120,11 @@
     </style>
   </head>
   <body>
+   
       <!--碳權存摺-->
       <div class="title">
         <div class="ti-icon">
-            <a href="../index.jsp">
+            <a href="../jsp/member.jsp">
               <img src="../img/left-arrow.png" alt="">
             </a>
             
@@ -132,7 +135,32 @@
     </div>
 
     <main>
-
+        <%
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8"); 
+            //jsp連接前端範例
+            try {
+            //Step 1: 載入資料庫驅動程式 
+                Class.forName("com.mysql.jdbc.Driver");
+                try {
+            //Step 2: 建立連線 	
+                    String url="jdbc:mysql://127.0.0.1:3306/?serverTimezone=UTC";
+                    String sql="";
+                    Connection con=DriverManager.getConnection(url,"root","12345678");
+                    if(con.isClosed())
+                        out.println("連線建立失敗");
+                    else {
+            //Step 3: 選擇資料庫   
+                    sql="USE `question`";
+                    con.createStatement().execute(sql);
+            //Step 4: 執行 SQL 指令, 若要操作記錄集, 需使用executeQuery, 才能傳回ResultSet	
+                    sql="select * from member_log";
+                    PreparedStatement pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
+                    ResultSet rs=pstmt.executeQuery();
+            //先移到檔尾, getRow()後, 就可知道共有幾筆記錄
+                    rs.last();
+                    int totalNo=rs.getRow();
+                    %>
         <!--用戶累計點數-->
         <div class="shadow-sm p-3 mb-4 bg-body rounded">
             <div class="count">
@@ -166,22 +194,44 @@
                     </div>
                 </div>
             </div>
-
+          
             <!--點數累計紀錄-->
             <div class="shadow p-3 mb-4 bg-body rounded">
                 <div class="record">
-    
+      <%
+            sql="select * from `member_log`";
+                    rs=con.createStatement().executeQuery(sql);
+                    
+                    while(rs.next()){
+            %>
                     <div class="txt">
-                        <a href="detail.html">
-                            <p>12/12</p>
+                        <a href="detail.jsp?total=<%=rs.getString(3)%>&bill=<%=rs.getString(4)%>&foot=<%=rs.getString(6)%>&point=<%=rs.getString(5)%>">
+                            <p><%=rs.getDate(7)%></p>
                             <p>AI智慧洗</p>
-                            <p>+100</p>
+                            <p>+<%=rs.getString(5)%>點</p>
                         </a>
                     </div>
-
+                    <%}	
+                    //Step 6: 關閉連線
+                              con.close();
+                                      }
+                                   }
+                                       catch (SQLException sExec) {
+                                           out.println("SQL錯誤"+sExec.toString());
+                                }
+                            }
+                           catch (ClassNotFoundException err) {
+                              out.println("class錯誤"+err.toString());
+                           }
                    
+                           %>
+                </div>
+               
+            </div> 
         </main>
-       <!--固定欄位-->
+       
+       
+        <!--固定欄位-->
   <footer>         
     <ul class="nav1">
         <a href="../index.jsp" class="navitem">
@@ -220,6 +270,7 @@
         </a>   
     </ul>
 </footer>
+
 
 
     <!-- Optional JavaScript; choose one of the two! -->

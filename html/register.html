@@ -11,117 +11,89 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-       
-        <link rel="icon" type="image/x-icon" href="../img/logo.png" />
-        <script src="../js/check.js"></script>
-      <script type="text/javascript">
-              window.onload=function(){
-                var send=document.getElementById('send'),
-                  times=60,
-                  timer=null;
-                send.onclick=function(){
-                 // 計時開始
-                 var that = this;
-                  this.disabled=true;
-                  timer = setInterval(function(){
-                    times --;
-                    that.value = times + "秒後重試";
-                    if(times <= 0){
-                      that.disabled =false;
-                      that.value = "傳送驗證碼";
-                      clearInterval(timer);
-                      times = 60;
-                    }
-                    //console.log(times);
-                  },1000);  
-                }  
-              } 
-             
-          function ShowPwd() {
-            var x = document.getElementById("password");
-               if (x.type === "password") {
-                   x.type = "text";
-              }
-               else {
-                   x.type = "password";
-               }
-          }      
-          jQuery.validator.methods.matches = function (value, element, params) {
-    var re = new RegExp(params);
-    return this.optional(element) || re.test(value);
-  };
-var re = new RegExp("^09\\d{8}$");
-$( "#myform" ).validate({
-  rules: {
-    phone: {
-      required: true,
-      matches: re, // <-- no such method called "matches"!
-    },
-    os: {
-      required: true,
-    }
-  },
-  messages: {
-    phone: {
-      required: "請填寫您的手機號碼",
-      matches: "您的手機號碼格式錯誤，需為10位的正確數字手機格式",
-    },
-     os: {
-      required: "請填寫您的手機系統",
-    },
-  },
-  submitHandler: function (form) {
-    alert('成功送出！');
-  }
-});
-              </script>
-              <style>
-                @media(min-width: 960px) { 
-  .container {
-    width: 450px;
-    margin: 0 auto;
-  }
-}
-.container h1 {
-  margin: 20px;
-  text-align: center;
-}
-.container form {
-  padding: 20px;
-  background: #EBF0F4;
-  border-radius: 10px;
-}
-.error{
-  color:#dc3545;
-}
-label.error{
-  padding-top:5px;
-}
-              </style>
+        <link href="../css/login.css" rel="stylesheet" />
+        <script type="text/javascript">
+            window.onload=function(){
+              var send=document.getElementById('send'),
+                times=60,
+                timer=null;
+              send.onclick=function(){
+               // 計時開始
+               var that = this;
+                this.disabled=true;
+                timer = setInterval(function(){
+                  times --;
+                  that.value = times + "秒後重試";
+                  if(times <= 0){
+                    that.disabled =false;
+                    that.value = "傳送驗證碼";
+                    clearInterval(timer);
+                    times = 60;
+                  }
+                  //console.log(times);
+                },1000);  
+              }  
+            } 
+           </script>
     </head>
     <body id="page-top">
       
-        <div class="container">
-            <h1>validate.js 台灣手機號碼認證範例</h1>
-            <form id="myform">
-          
-              <div class="form-group">
-                <label for="exampleInputEmail1">手機號碼</label>
-                <input type="text" class="form-control" id="phone" placeholder="phone" name="phone">
-              </div>
-              <div>
-                <input type="radio" id="ios" name="os" value="ios" checked />
-                <label for="ios" class="text">
-                  <span>iOS</span>
-                </label>&nbsp;&nbsp;
-                <input type="radio" id="android" name="os" value="android" />
-                <label for="android" class="text">
-                  <span>Android</span>
-                </label>
-              </div>
-              <button type="submit" class="btn btn-primary">送出</button>
-            </form>
-          </div>
-          
+        <!-- Contact Section-->
+        <section class="page-section" id="contact">
+            <div class="container">
+                <!-- Contact Section Heading-->
+                <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">register</h2>
+                <!-- Icon Divider-->
+                <div class="divider-custom">
+                    <div class="divider-custom-line"></div>
+                    <div class="divider-custom-icon"><img src="../img/logo.png"></div>
+                    <div class="divider-custom-line"></div>
+                </div>
+                <!-- Contact Section Form-->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 col-xl-7">
+                        <form action="card.html" id="contactForm" data-sb-form-api-token="API_TOKEN" >
+                            <!-- Name input-->
+                            <div class="form-floating mb-3">
+                               
+                                <input class="form-control" id="account" type="text"  placeholder="帳號" required />
+                                <label for="account">身分證</label>
+                         
+                            </div>
+                            <!-- Email address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="name" type="text" placeholder="name" required />
+                                <label for="name">姓名</label>
+                               
+                            </div>
+                                <div class="form-floating mb-3">
+                                <input class="form-control" id="password" type="password" placeholder="xxx" required />
+                                <label for="password">密碼</label>
+                               
+                            </div>
+                            <!-- Email address input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="phone" type="tel" name="phone" placeholder="(123) 456-7890"  oninput="if(!((/^[0-9]*$/.test(value)))){value=''}"required />
+                                <label for="phone">電話（只能輸入數字)</label>
+                               
+                            </div>
+                            <div class="get">
+                                <input type="submit" id="send" value="傳送驗證碼">
+                              </div>
+                            <!-- Phone number input-->
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="code" type="text" placeholder="xxxx" required />
+                                <label for="code">驗證碼</label>
+                              
+                            </div>
+                        <div class="inputBox">
+                            <input type="submit" value="下一步"> 
+                            </div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
     </body>
 </html>

@@ -152,7 +152,7 @@
 
   <main>
       <!--點數/碳足跡-->
-    <a href="../html/cunzhe.html">
+    <a href="../jsp/cunzhe.jsp">
         <div class="shadow p-3 mb-5 bg-body rounded">
 
           <div class="count">

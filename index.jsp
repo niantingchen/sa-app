@@ -172,7 +172,7 @@ con.createStatement().execute(sql);
     <main>
 
         <!--會員-->
-        <a href="../sa-app/html/cunzhe-2.html">
+        <a href="../sa-app/jsp/cunzhe.jsp">
             <div class="shadow p-3 mb-4 bg-body rounded ">
                 <div class="huiyuan">
                     <div class="hy-pic">
