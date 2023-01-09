@@ -1,4 +1,5 @@
-<!doctype html>
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%><!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -93,12 +94,13 @@
   <body>
     <div class="title">
         <div class="ti-icon">
-            <a href="../html/wish.html">
+            <a href="../jsp/wish.jsp">
               <img src="../img/left-arrow.png" alt="">
 
             </a>
             
         </div>
+    
         <div class="ti-txt">
             <p>許願罐新增</p>
         </div>
@@ -108,31 +110,32 @@
             <p>設定後會顯示存入點數，</p>
             <p>點數集滿才可提領唷～</p>
         </div>
-
+           <form name="increase_wish" method="post" action="increase_wish_det.jsp">
         <div class="wishname">
             <div class="wishname-title">
                 <p>許願罐名稱</p>
-                <input type="text" placeholder="許願罐名稱" style="text-align:center" >
+                <input type="text" name="name" placeholder="許願罐名稱" style="text-align:center" required >
             </div>
         </div>
 
         <div class="firstinsert">
             <label>首次存入金額（非必填）</label><br>
             <label>點數尚餘500點</label>
-            <input type="text" placeholder="請輸入點數" style="text-align:center" >  
+            <input type="text" name="deposit" placeholder="請輸入點數" style="text-align:center" required>  
         </div>
 
         <div class="goal">
             <label for="">儲蓄目標</label>
-            <input type="text" placeholder="請輸入點數" style="text-align:center" >  
+            <input type="text"  name="target" placeholder="請輸入點數" style="text-align:center" required>  
 
         </div>
-
-        <div class="btn">
-            <button><a href="../html/increasewi-result.html">下一步</a></button>
-        </div>
+<br>
+        <div class="goal">
+            <input type="submit" value="新增">
+            </div>
+       
     </main>
-    
+     </form>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

@@ -12,13 +12,7 @@
     <link rel="stylesheet" href="../css/footer.css">
     <link rel="icon" type="image/x-icon" href="../img/logo.png" />
     <title>店家</title>
-    <%
-    if(session.getAttribute("memberid")==null)
-        out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
-    else
-        out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
-  
-  %>
+   
     <style>
 
         .title{
@@ -137,13 +131,13 @@
      con.createStatement().execute(sql);
      %>
      <%	 
-       if(session.getAttribute("memberid") != null ){
-          sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+       if(session.getAttribute("memberAc") != null ){
+          sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
           ResultSet rs=con.createStatement().executeQuery(sql);
-          String  name="",memberid="";
+          String  name="",memberAc="";
           while(rs.next()){
              name=rs.getString("name");
-             memberid=rs.getString("memberid");
+             memberAc=rs.getString("memberAc");
                      
           }
           con.close();
@@ -183,7 +177,13 @@
                 <button class="btn btn-outline-success" type="submit">搜尋</button>
             </form>
         </nav>
-          
+        <%
+        if(session.getAttribute("memberAc")==null)
+            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+      
+      %>
     </div>
 
     
@@ -380,7 +380,7 @@
             </li>
         </a>
         
-        <a href="../html/friends.html" class="navitem">
+        <a href="../jsp/friends.jsp" class="navitem">
             <li>
                 <img src="../img/dog.png" alt="">
                 <p>好友</p>

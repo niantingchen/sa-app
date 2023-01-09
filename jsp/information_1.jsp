@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>我的卡片</title>
+        <title>個人資訊</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="../img/logo.jpg" />
         <!-- Bootstrap icons-->
@@ -16,8 +16,71 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../css/style_1.css" rel="stylesheet" />
         <link rel="stylesheet" href="../css/footer.css">
-        <style>
-            footer{
+    </head>
+    <style>           
+        .title{
+        padding: 20px 40px 15px 60px;
+        background-color: beige;
+        display: flex;
+        justify-content: space-between;
+        /*align-items: center;*/
+      }
+      .ti-txt>p{
+        font-size: 25px;
+      }
+      .icon{
+        margin-top: 5px;
+      }
+      .icon>a{
+        padding: 10px;
+      }
+      .icon a >img{
+        width: 30px;
+        height: 30px;
+      }
+
+      /*點數/碳足跡*/
+      .count{
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .left,.right{
+        display: flex;
+      }
+      .left>p,.right>p{
+        font-size: 28px;
+      }
+      .pic>img{
+        width: 30px;
+        height: 30px;
+        
+      }
+
+      main{
+        padding: 50px;
+      }
+      .wish{
+        display: flex;
+        justify-content: space-around;
+      }
+      .wishpic>img{
+        width: 60px;
+        height: 60px;
+      }
+      .wi-txt{
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+      .wi-txt>p{
+        font-size: 20px;
+      }
+  
+      footer{
             padding: 20px;
             background-color: beige;
             position:fixed;
@@ -39,10 +102,17 @@
             justify-content: space-around;
             align-items: center;
         }
-      
-        </style>
-    </head>
+    </style>
     <body>
+<%
+	if(session.getAttribute("access")==null)
+    	out.println("<a class= 'h' href='../html/login.html'>登入</a>");
+        if (connectMyQL()==false){
+            out.print("DB connect fail");
+            return;
+        }   
+%>
+	
         <!-- Navigation-->
         <div class="fixed-bottom">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -55,22 +125,14 @@
                 </div>
             </div>
         </nav>
-<%
-connectMyQL();
-	if(session.getAttribute("access")==null)
-    	out.println("<a class= 'h' href='../html/login.html'>登入</a>");
-%>
         <!-- Header-->
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <!--<img class="display-4 fw-bolder" src="assets/logo.jpg">-->
-                    <p class="lead fw-normal text-white-50 mb-0">我的卡片</p>
-                    <!--<div class="point">
-                        <p class="lead fw-normal-1 text-white-51 mb-0">帳號:M123xxxxxx</p>
-                    </div>
-                </div>-->
-				<%		   
+                    <p class="lead fw-normal text-white-50 mb-0">個人資訊</p>
+                    <div class="point">
+<%		   
 	String sql = "SELECT * FROM `member` WHERE `memberAc`= '"+session.getAttribute("memberAc")+"'";
 	ResultSet rs=con.createStatement().executeQuery(sql);
 	int a=0;
@@ -79,41 +141,49 @@ connectMyQL();
                         <p class="lead fw-normal-1 text-white-51 mb-0">帳號:<%=rs.getString(2)%></p>
 						<input type="hidden" name="id">
 						<%}%>
+                    </div>
+                </div>
             </div>
             
         </header>
         <!-- Section-->
         <section class="py-5">
-            <form name="updatecard" method="post" action="Cupdate.jsp">
+<%		   
+    //String mail=(String)session.getAttribute("memberAc");
+	sql = "SELECT * FROM `member`, `member_card` WHERE `member`.`memberAc`= '"+session.getAttribute("memberAc")+"' AND `member`.`memberAc` = `member_card`. `id`";
+	//sql="SELECT * FROM `member`, `member_card` WHERE `member`.`memberAc` = `member_card`. `id`;";
+	ResultSet rs2=con.createStatement().executeQuery(sql);
+	while(rs2.next()){
+%>
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     <div class="col mb-5">
                         <!--<div class="card h-100">-->
                             <div class="change" style="border-width: 2px; border-style: outset; border-color: #F0F0F0; border-radius: 10px;">
-                                <p>銀行代碼</p>
-                                <p><input type="text" placeholder="請輸入銀行代碼" name="cardid1" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
                                 <p>信用卡號</p>
-                                <p><input type="text" placeholder="請輸入信用卡號" name="cardnum1" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
+                                <p><%=rs2.getString("cardid")%></p>
                                 <p>信用卡有效日期</p>
-                                <p><input type="date" name="carddate1" style=" border-bottom: 2px soild;border-left-width:0px; border-right-width:0px;border-top-width:0px;"></p>
+                                <p><%=rs2.getString("carddate")%></p>
+                               <%}%>
                            
                             </div>
                         </div>
                     </div>
-                    
-                    </div>
-                    
+                    <div class="col mb-5">
+                       
                         </div>
                     </div>
                     
-                   <div class="col mb-5">
-                       <input type="submit" value="儲存" style="margin-left: 43%; font-size: 20px;">
-                        
+                        </div>
+                   
+                   <!--<div class="col mb-5">
+                       <input type="submit" value="儲存" style="margin-left: 43%; font-size: 20px;">-->
+
         </section>
-       
+        
     </body>
     <!--固定欄位-->
-<footer>         
+  <footer>         
     <ul class="nav1">
         <a href="../index.jsp" class="navitem">
             <li>
@@ -151,7 +221,15 @@ connectMyQL();
         </a>   
     </ul>
 </footer>
-<%
-closeMySQL();
-%>
+
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="../js/scripts.js"></script>
+    </body>
+    <%
+    closeMySQL();
+    %> 
+
 </html>

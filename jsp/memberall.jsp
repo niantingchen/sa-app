@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="../css/footer.css">
         <style>           
         .title{
-        padding: 20px 40px 15px 60px;
+        padding: 20px 40px 15px 20px;
         background-color: beige;
         display: flex;
         justify-content: space-between;
@@ -28,6 +28,7 @@
       }
       .icon{
         margin-top: 5px;
+        float: left;
       }
       .icon>a{
         padding: 10px;
@@ -100,15 +101,12 @@
             justify-content: space-around;
             align-items: center;
         }
+        .h{
+            margin-left:100px;
+        }
     </style>
         </style>
-        <%
-        if(session.getAttribute("memberid")==null)
-            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
-        else
-            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
-      
-      %>
+        
     </head>
     <body>
         <div class="title">
@@ -116,9 +114,19 @@
                 <div class="title">
                     <div class="icon">
                       <a href="../jsp/memberall.jsp"><img src="../img/bear.png" alt="">會員專區</a>
+                      <%
+        if(session.getAttribute("memberAc")==null)
+            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+      
+      %>
                     </div>
+                    
                 </div>
+                
             </div>
+            
         </div>
 
         <!-- Navigation-->
@@ -164,13 +172,13 @@
      con.createStatement().execute(sql);
      %>
      <%	 
-       if(session.getAttribute("memberid") != null ){
-          sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+       if(session.getAttribute("memberAc") != null ){
+          sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
           ResultSet rs=con.createStatement().executeQuery(sql);
-          String  name="",memberid="";
+          String  name="",memberAc="";
           while(rs.next()){
              name=rs.getString("name");
-             memberid=rs.getString("memberid");
+             memberAc=rs.getString("memberAc");
            
           }
           con.close();
@@ -424,7 +432,7 @@
             </li>
         </a>
         
-        <a href="../html/friends.html" class="navitem">
+        <a href="../jsp/friends.jsp" class="navitem">
             <li>
                 <img src="../img/dog.png" alt="">
                 <p>好友</p>

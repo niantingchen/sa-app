@@ -6,18 +6,18 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="../img/logo.png" />
+    <link rel="icon" type="image/x-icon" href="../sa-app/img/logo.png" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/footer.css">
-    
+    <link rel="stylesheet" href="../sa-app/css/footer.css">
     <%
-    if(session.getAttribute("memberid")==null)
-        out.print("<script>alert('請先登入 !');location.href='html/login.html'</script>");
-    else
-        out.println("<a class= 'h' href='jsp/logout.jsp'>登出</a>");
+Class.forName("com.mysql.jdbc.Driver");
+String url="jdbc:mysql://127.0.0.1:3306/question?serverTimezone=UTC";
+Connection con=DriverManager.getConnection(url,"root","12345678");
+String sql="USE `question`";
+con.createStatement().execute(sql);
+%>
   
-  %>
 
     <title>首頁</title>
     <style>
@@ -142,64 +142,59 @@
             justify-content: space-around;
             align-items: center;
         }
-      
+      .h{
+        margin-left: 100px;
+      }
 
        
         
         
     </style>
-      <%
-      try{
-      Class.forName("com.mysql.jdbc.Driver");
-      try{
-      String url="jdbc:mysql://localhost";
-      Connection con=DriverManager.getConnection(url,"root","12345678");
-      String sql="use question";
-      con.createStatement().execute(sql);
-      %>
-      <%	 
-        if(session.getAttribute("memberid") != null ){
-           sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
-           ResultSet rs=con.createStatement().executeQuery(sql);
-           String  name="",memberid="";
-           while(rs.next()){
-              name=rs.getString("name");
-              memberid=rs.getString("memberid");
-             		 
-           }
-           con.close();
-          %>
+      
+      
   </head>
   <body>
    
     <div class="top">
         
-        <img src="img/logo.png" alt="">
+        <img src="../sa-app/img/logo.png" alt="">
         <p>碳制郎</p>
         
-        
+        <%
+        if(session.getAttribute("memberAc")==null)
+            out.print("<script>alert('請先登入 !');location.href='../sa-app/html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../sa-app/jsp/logout.jsp'>登出</a>");
+      
+      %>
     </div>
 
     <main>
 
         <!--會員-->
-        <a href="html/cunzhe-2.html">
+        <a href="../sa-app/html/cunzhe-2.html">
             <div class="shadow p-3 mb-4 bg-body rounded ">
                 <div class="huiyuan">
                     <div class="hy-pic">
-                        <img src="img/bear.png" alt="">
+                        <img src="../sa-app/img/bear.png" alt="">
                     </div>
+                    <%		   
+                    sql = "SELECT * FROM `member` WHERE `memberAc`= '"+session.getAttribute("memberAc")+"'";
+                    ResultSet rs1=con.createStatement().executeQuery(sql);
+                    int a=0;
+                    while(rs1.next()){
+                %>
                     <div class="name">
-                        <p><%=name%> </p>
+                        <p><%=rs1.getString(3)%> </p>
                     </div>
-    
+                    <%}%>
                     <div class="count">
                         <div class="pic" id="star1">
-                            <img src="img/sparkles.png" alt="">
+                            <img src="../sa-app/img/sparkles.png" alt="">
                         </div>      
                         <h2>500</h2>
                         <div class="pic" id="star2">
-                            <img src="img/sparkles.png" alt="">
+                            <img src="../sa-app/img/sparkles.png" alt="">
                         </div> 
     
                     </div>
@@ -209,36 +204,17 @@
             </div>
 
         </a>
-        <%
-    }
-    else{
         
-        con.close();//結束資料庫連結
-    %>
-    
-
-    <%
-    }
-        }
-        catch (SQLException sExec) {
-               out.println("SQL錯誤"+sExec.toString());
-        }
-    }
-    catch (ClassNotFoundException err) {
-       out.println("class錯誤"+err.toString());
-    }
-        
-    %>	
 
         <!--隨機廣告-->
         <div class="shadow p-3 mb-4 bg-body rounded">
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <img src="img/globe.png" class=" w-100" alt="...">
+                    <img src="../sa-app/img/globe.png" class=" w-100" alt="...">
                   </div>
                   <div class="carousel-item">
-                    <img src="img/number.png" class="w-100" alt="...">
+                    <img src="../sa-app/img/number.png" class="w-100" alt="...">
                   </div>
                 
                 </div>
@@ -250,7 +226,7 @@
         <div class="shadow p-3 mb-4 bg-body rounded">
             <div class="more"> 
             
-                    <a href="html/shop.html">更多</a>
+                    <a href="../sa-app/html/shop.html">更多</a>
                 
             </div>
 
@@ -260,7 +236,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -274,7 +250,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -287,7 +263,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -300,7 +276,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -313,7 +289,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -326,7 +302,7 @@
                         <div class="col">
                             <div class="p-3">
                                 <div class="p3-pic">
-                                    <img src="img/laundry-machine.png" alt="">
+                                    <img src="../sa-app/img/laundry-machine.png" alt="">
                                 </div>
                                 
                             </div>
@@ -350,37 +326,37 @@
     <!--固定欄位-->
     <footer>         
         <ul class="nav1">
-            <a href="index.jsp" class="navitem">
+            <a href="../sa-app/index.jsp" class="navitem">
                 <li>
-                    <img src="img/home-button.png" alt="">
+                    <img src="../sa-app/img/home-button.png" alt="">
                     <p>首頁</p>
                 </li>
             </a>
 
-            <a href="jsp/shop.jsp" class="navitem">
+            <a href="../sa-app/jsp/shop.jsp" class="navitem">
                 <li>
-                    <img src="img/shop.png" alt="">
+                    <img src="../sa-app/img/shop.png" alt="">
                     <p>店家</p>
                 </li>
             </a>
             
-            <a href="jsp/store.jsp" class="navitem">
+            <a href="../sa-app/jsp/store.jsp" class="navitem">
                 <li>
-                    <img src="img/shopping-cart.png" alt="">
+                    <img src="../sa-app/img/shopping-cart.png" alt="">
                     <p>商城</p>
                 </li>
             </a>
             
-            <a href="html/friends.html" class="navitem">
+            <a href="../sa-app/html/friends.html" class="navitem">
                 <li>
-                    <img src="img/dog.png" alt="">
+                    <img src="../sa-app/img/dog.png" alt="">
                     <p>好友</p>
                 </li>
             </a>
 
-            <a href="jsp/member.jsp" class="navitem">
+            <a href="../sa-app/jsp/member.jsp" class="navitem">
                 <li>
-                    <img src="img/user.png" alt="">
+                    <img src="../sa-app/img/user.png" alt="">
                     <p>會員</p>
                 </li>
             </a>

@@ -1,3 +1,8 @@
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8" %>
+<%@page import="java.sql.*" %>
+ <%@ page import = "java.io.*"%>
+<%@include file="config.jsp" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -93,7 +98,7 @@
         }
         
     </style>
-
+ 
   </head>
   <body>
       <div class="title">
@@ -108,12 +113,12 @@
               <p>許願罐內容</p>
           </div>
       </div>
-
+     
       <main>
           <div class="maintitle">
               <div class="miti-txt">
                  
-                    <p>我不要重修SA</p>
+                    <p><%=request.getParameter("name")%></p>
                   
               </div>
               <div class="miti-jindu">
@@ -129,7 +134,7 @@
                   </div>
                   <div class="miti-bottom-right">
                       <span>目標點數：</span>
-                      <span>1000</span>
+                      <span><%=request.getParameter("target")%></span>
                   </div>
               </div>
           </div>
@@ -229,8 +234,6 @@
       </main>
 
 
-    
-    
 
     <!-- Optional JavaScript; choose one of the two! -->
 

@@ -84,13 +84,13 @@
         con.createStatement().execute(sql);
         %>
         <%	 
-          if(session.getAttribute("memberid") != null ){
-             sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+          if(session.getAttribute("memberAc") != null ){
+             sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
              ResultSet rs=con.createStatement().executeQuery(sql);
-             String  name="",memberid="";
+             String  name="",memberAc="";
              while(rs.next()){
                 name=rs.getString("name");
-                memberid=rs.getString("memberid");
+                memberAc=rs.getString("memberAc");
               
              }
              con.close();
@@ -102,7 +102,7 @@
                     <!--<img class="display-4 fw-bolder" src="assets/logo.jpg">-->
                     <p class="lead fw-normal text-white-50 mb-0">個人資訊</p>
                     <div class="point">
-                        <p class="lead fw-normal-1 text-white-51 mb-0">帳號:<%=memberid%>
+                        <p class="lead fw-normal-1 text-white-51 mb-0">帳號:<%=memberAc%>
                     </div>
                 </div>
             </div>
@@ -365,7 +365,7 @@
             </li>
         </a>
         
-        <a href="../html/friends.html" class="navitem">
+        <a href="../jsp/friends.jsp" class="navitem">
             <li>
                 <img src="../img/dog.png" alt="">
                 <p>好友</p>

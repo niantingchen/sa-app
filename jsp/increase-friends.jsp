@@ -1,4 +1,5 @@
-<!doctype html>
+<%@page contentType="text/html;charset=utf-8" language="java" import="java.sql.*"%>
+ <%@ page import = "java.io.*"%><!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -8,14 +9,41 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-     <!--下方固定欄位CSS-->
-     <link rel="stylesheet" href="../css/footer.css">
+    <!--下方固定欄位CSS-->
+    <link rel="stylesheet" href="../css/footer.css">
 
     <title>加入好友</title>
+    <script>
+
+        function checkPassword(control) {
+            if (control.value.length<10) 
+            {
+                validatePrompt(control, "請輸入正確的電話格式！");
+                return (false);
+            }
+            return (true);
+        }
+        
+        
+        function validateForm(form) {
+        
+            if (!checkPassword(form.phone)) return;
+            
+            document.testform.submit();	// Submit form
+        }
+        
+        function validatePrompt(control, promptStr) {
+            alert(promptStr);
+            control.focus();
+            return;
+        }
+        </script>
+        
+        
     <style>
         a{
             text-decoration: none;
-            color:black;
+            color:green;
         }
         .title{
             padding: 18px 50px;
@@ -55,47 +83,9 @@
         input::-webkit-input-placeholder{
             text-align: center;
         }
-        .d-flex button>a{
-            color: green;
-            
-        }
-        .d-flex button>a:hover{
-            color: white;
-            
-        }
-        .shadow{
-            margin-top: 50px;
-        }
-        .in-pic,.in-name{
-            text-align: center;
-        }
-        .in-pic>img{
-            width: 60px;
-            height: 60px;
-            
-        }
-        .in-name{
-            margin-top: 20px;
-            font-size: large;
-            font-weight: 500;
-        }
-        .in-icon a{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .in-icon-pic{
-            margin-right: 20px;
-        }
-        .in-icon-pic>img{
-            width: 30px;
-            height: 30px;
-        }
-        .in-icon-txt{
-            padding-top:15px ;
-        }
-        /*固定欄位*/
-        a{
+
+         /*固定欄位*/
+         a{
             text-decoration: none;
             color: black;
             /*background-color: #fff;*/
@@ -127,6 +117,7 @@
         }
         
     </style>
+   
   </head>
   <body>
     <div class="title">
@@ -144,37 +135,13 @@
         <div class="in-search">
             <p>電話號碼</p>
         </div>
-        <!--<input type="text" placeholder="09XXXXXXXX" style="text-align:center" >-->
-        <form class="d-flex">
-            <input type="text" placeholder="09XXXXXXXX" style="text-align:center">
-           <button class="btn btn-outline-success" type="submit"> <a href="../html/increase-friends-2.html">Search</a></button>
+        <!--<input type="text" placeholder="09XXXXXXXX" style="text-align:center" >-->        
+        <form class="d-flex" action="key.jsp" method="POST" name=testform>
+                <input type="text" placeholder="09XXXXXXXX"  name="phone"  size=10 style="text-align:center">
+                <br><br>
+                <input type="button"  class="btn btn-outline-success"value="Search" onClick="validateForm(this.form)"></button>
         </form>
 
-        <div class="shadow p-3  bg-body rounded">
-            <div class="in-search-answer">
-                <div class="in-pic">
-                    <img src="../img/bear.png" alt="">
-                </div>
-        
-                <div class="in-name">
-                    <p><%=name%></p>
-                </div>
-        
-                <div class="in-icon">
-                    <a href="../jsp/friends.jsp">
-                        <div class="in-icon-pic">
-                            <img src="../img/add-friend.png" alt="">
-            
-                        </div>
-                        <div class="in-icon-txt">
-                            <p>加入</p>
-                        </div>
-
-                    </a>   
-                </div>
-        
-            </div>
-        </div>
     </main>
 
     <!--固定欄位-->
@@ -216,7 +183,6 @@
             </a>   
         </ul>
     </footer>
-
 
     <!-- Optional JavaScript; choose one of the two! -->
 

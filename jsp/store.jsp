@@ -11,19 +11,21 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
     <link rel="stylesheet" href="../css/footer.css">
     <title>商城</title>
-    <%
-    if(session.getAttribute("memberid")==null)
-        out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
-    else
-        out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
-  
-  %>
+
+    <script> 
+      document.onclick=function()
+      { var obj = event.srcElement; 
+      if(obj.type == "button"){ 
+      alert(obj.id); } 
+      } 
+      </script> 
+      
   </head>
   <style>
     .p-3{
       border-radius: 10px;
       text-align: center;
-      margin: 2%;
+      margin: 10px;
       background-color:  #b4d09f
       
     }
@@ -34,8 +36,9 @@
       align-items: center; 
       text-align: center;
       border-color:gray;
-      margin-top: 5%;
+     
     }
+
     .btn-primary{
       background-color:  #9ad071;
       border: #127436;;
@@ -54,6 +57,14 @@
             display: flex;
             justify-content: space-around;
             align-items: center;
+           
+        }
+        .nav{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border:1px solid ;
+            border-color:#9ad071
         }
         .navitem{
             width: 50px;
@@ -112,51 +123,38 @@
             align-items: center;
         }
         .container{
-          padding: 50px;
+          padding: 5px;
         }
   </style>
-   <%
-   try{
-   Class.forName("com.mysql.jdbc.Driver");
-   try{
-   String url="jdbc:mysql://localhost";
-   Connection con=DriverManager.getConnection(url,"root","12345678");
-   String sql="use question";
-   con.createStatement().execute(sql);
-   %>
-   <%	 
-     if(session.getAttribute("memberid") != null ){
-        sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
-        ResultSet rs=con.createStatement().executeQuery(sql);
-        String  name="",memberid="";
-        while(rs.next()){
-           name=rs.getString("name");
-           memberid=rs.getString("memberid");
-               
-        }
-        con.close();
-       %>
-       <%
-      }
-      else{
-          
-          con.close();//結束資料庫連結
-      %>
-      
-  
-      <%
-      }
-          }
-          catch (SQLException sExec) {
-                 out.println("SQL錯誤"+sExec.toString());
-          }
-      }
-      catch (ClassNotFoundException err) {
-         out.println("class錯誤"+err.toString());
-      }
-          
-      %>	
+    
+
   <body>
+    <%
+    request.setCharacterEncoding("UTF-8");
+    response.setCharacterEncoding("UTF-8"); 
+		//jsp連接前端範例
+		try {
+        //Step 1: 載入資料庫驅動程式 
+            Class.forName("com.mysql.jdbc.Driver");
+            try {
+        //Step 2: 建立連線 	
+                String url="jdbc:mysql://127.0.0.1:3306/?serverTimezone=UTC";
+                String sql="";
+                Connection con=DriverManager.getConnection(url,"root","12345678");
+                if(con.isClosed())
+					out.println("連線建立失敗");
+				else {
+        //Step 3: 選擇資料庫   
+                sql="USE `question`";
+                con.createStatement().execute(sql);
+        //Step 4: 執行 SQL 指令, 若要操作記錄集, 需使用executeQuery, 才能傳回ResultSet	
+                sql="select * from voucher";
+				PreparedStatement pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
+				ResultSet rs=pstmt.executeQuery();
+        //先移到檔尾, getRow()後, 就可知道共有幾筆記錄
+                rs.last();
+                int totalNo=rs.getRow();
+                %>
     <div class="title">
       <div class="ti-icon">
           <img src="../img/shopping-cart.png" alt="">
@@ -169,324 +167,61 @@
               <button class="btn btn-outline-success" type="submit">搜尋</button>
           </form>
       </nav>
+      <%
+      if(session.getAttribute("memberAc")==null)
+          out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+      else
+          out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+    
+    %>
     </div>
+    <%
+		sql="select * from `voucher`";
+				rs=con.createStatement().executeQuery(sql);
+				
+				while(rs.next()){
+		%>
     <div class="container">
-      <div class="row row-cols-3 row-cols-lg-5 g-2 g-lg-3">
-        <div class="col">
-          <div class="p-3 ">
-            跑車上路<br>
-            許可<br>
-            3000點<br>
-          </div>
+   
+        
+          <div class="nav">
+            <%=rs.getString(2)%><br>
+            
+            <%=rs.getString(3)%><br>
+         
+      
           <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    跑車上路<br>
-                    許可<br>
-                    3000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-
-        <div class="col">
-          <div class="p-3 ">            
-            重機上路<br>
-            許可<br>
-            4000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    重機上路<br>
-                    許可<br>
-                    4000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col">
-          <div class="p-3 ">
-            住五星級<br>
-            飯店<br>
-            8000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    住五星級<br>
-                    飯店<br>
-                    8000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3">
-            住四星級<br>
-            飯店<br>
-            5000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    住四星級<br>
-                    飯店<br>
-                    5000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3">
-            炭烤烤肉<br>
-            許可<br>
-            5000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal4">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    炭烤烤肉<br>
-                    許可<br>
-                    5000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="p-3">
-            放煙火<br>
-            許可<br>
-            3000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal5">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal5" tabindex="-1" aria-labelledby="exampleModalLabel5" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    放煙火<br>
-                    許可<br>
-                    3000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3">
-            遊樂園<br>
-            號碼牌<br>
-            5000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal6">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel6" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    遊樂園<br>
-                    號碼牌<br>
-                    5000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="p-3 ">
-            遊輪票<br>
-            號碼牌<br>
-            20000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal7">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal7" tabindex="-1" aria-labelledby="exampleModalLabel7" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    遊輪票<br>
-                    號碼牌<br>
-                    20000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="p-3 ">
-            郵輪票<br>
-            號碼牌<br>
-            50000點<br>
-          </div>
-          <div class="store-btn">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal8">
-             兌換
-            </button>     
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal8" tabindex="-1" aria-labelledby="exampleModalLabel8" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body" style=" text-align: center;">
-                    郵輪票<br>
-                    號碼牌<br>
-                    50000點<br>
-                  </div>
-                  <div class="modal-footer">
-                    <a href="../html/voucher.html">
-                      <button type="button" class="btn btn-primary">確定兌換</button>
-                    </a>                    
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+            <a href="voucher.jsp?name=<%=rs.getString(2)%>">
+                          <button type="button" class="btn btn-primary" name="name"  id= <%=rs.getString(2)%> data-bs-toggle="modal" data-bs-target="#exampleModal3">
+             兌換    
+              
       </div>
-    </div>
+      </div>  
+     
+     </div>  
+            </button>  </a>
+     
+          
+           
+         
+       
 
+	<%}	
+ //Step 6: 關閉連線
+           con.close();
+		           }
+                }
+                    catch (SQLException sExec) {
+                        out.println("SQL錯誤"+sExec.toString());
+             }
+         }
+        catch (ClassNotFoundException err) {
+           out.println("class錯誤"+err.toString());
+        }
 
-    <div class="modal" tabindex="-1">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
+		%>
+
 
      
     <!--固定欄位-->
@@ -513,7 +248,7 @@
             </li>
         </a>
         
-        <a href="../html/friends.html" class="navitem">
+        <a href="../jsp/friends.jsp" class="navitem">
             <li>
                 <img src="../img/dog.png" alt="">
                 <p>好友</p>

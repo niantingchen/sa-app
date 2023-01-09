@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 
-    <title>許願罐新增確認</title>
+    <title>新增許願罐</title>
     <style>
         .title{
             padding: 18px 50px;
@@ -36,18 +36,35 @@
         main{
             padding: 50px;
         }
-        .inde-name{
+        .memo{
             text-align: center;
-            padding:20px;
+            margin-bottom: 30px;
         }
-        .dename-title>p{
-            font-size: 20px;
+        .wishname{
+            padding-bottom: 20px;
+            border-bottom: 1px solid #96a48b;
+        }
+        .wishname-title>p{
+            font-size: 12px;
+            
 
         }
-        .inde-receipt{
-            padding:20px;
-            display: flex;
-            justify-content: space-between;
+        input{
+            outline-style: none;
+            width: 100%;
+            height: 40px;
+            border:1px solid #96a48b;
+            border-radius: 20px;
+        }
+        input::-webkit-input-placeholder{
+            text-align: center;
+        }
+        .firstinsert{
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+        label{
+            font-size: 10px;
         }
         .btn{
             margin-top: 100px;
@@ -68,7 +85,7 @@
             color: #96a48b;
 
         }
-     
+        
 
     </style>
     
@@ -76,52 +93,47 @@
   <body>
     <div class="title">
         <div class="ti-icon">
-            <a href="../html/wish.html">
+            <a href="../jsp/wish.jsp">
               <img src="../img/left-arrow.png" alt="">
 
             </a>
             
         </div>
+    
         <div class="ti-txt">
-            <p>許願罐新增確認</p>
+            <p>許願罐新增</p>
         </div>
     </div>
     <main>
-        <div class="shadow p-3 mb-5 bg-body rounded">
-            <div class="inde-name">
-                <div class="dename-title">
-                    <p>許願罐名稱</p>
-                </div>
-                <div class="dename">
-                    <p>我不要重修SA</p>
-                </div>
-                   
+        <div class="memo">
+            <p>設定後會顯示存入點數，</p>
+            <p>點數集滿才可提領唷～</p>
+        </div>
+           <form name="increase_wish" method="post" action="../jsp/increase_wish_det.jsp">
+        <div class="wishname">
+            <div class="wishname-title">
+                <p>許願罐名稱</p>
+                <input type="text" name="name" placeholder="許願罐名稱" style="text-align:center" >
             </div>
         </div>
 
-        <div class="inde-receipt">
-            <div class="indere-title">
-                <p>首次存入點數</p>
-            </div>
-            <div class="indere-count">
-                <p>200</p>
-            </div>
-        </div>
-        <div class="inde-receipt">
-            <div class="indere-title">
-                <p>儲蓄目標點數</p>
-            </div>
-            <div class="indere-count">
-                <p>10000</p>
-            </div>
+        <div class="firstinsert">
+            <label>首次存入金額（非必填）</label><br>
+            <label>點數尚餘500點</label>
+            <input type="text" name="deposit" placeholder="請輸入點數" style="text-align:center" >  
         </div>
 
-        <div class="btn">
-            <button><a href="../html/wishdetail.html">確認新增</a></button>
+        <div class="goal">
+            <label for="">儲蓄目標</label>
+            <input type="text"  name="target" placeholder="請輸入點數" style="text-align:center" >  
+
         </div>
-        
+        <div class="goal">
+            <input type="submit" value="下一步">
+            </div>
+       
     </main>
-    
+     </form>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

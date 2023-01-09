@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -10,9 +12,9 @@
 
     <!--下方固定欄位CSS-->
     <link rel="stylesheet" href="../css/footer.css">
+   <title>好友清單</title>
 
-
-    <title>好友清單</title>
+ 
     <style>
         .title{
             padding: 23px 50px;
@@ -27,9 +29,11 @@
             display: flex;
         }
         .ti-icon{
-            margin-right: 5px;
+            text-align: center;
         }
-
+.ti-icon2{
+    margin-right: 10px;
+}
         .ti-icon >img,.ti-icon2 a>img{
             width: 35px;
             height: 35px;
@@ -44,7 +48,7 @@
         }
         .ti-icon2{
             width: 40%;
-            padding-left: 50px;
+            padding-left: 30px;
             position: relative;
             top:-8px;
             z-index: 2;
@@ -113,19 +117,39 @@
             justify-content: space-around;
             align-items: center;
         }
-      
-
-    </style>
     
+    </style>
+      <%
+      try{
+      Class.forName("com.mysql.jdbc.Driver");
+      try{
+      String url="jdbc:mysql://localhost";
+      Connection con=DriverManager.getConnection(url,"root","12345678");
+      String sql="use question";
+      con.createStatement().execute(sql);
+      %>
+      <%	 
+        if(session.getAttribute("memberAc") != null ){
+           sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
+           ResultSet rs=con.createStatement().executeQuery(sql);
+           String  name="";
+           while(rs.next()){
+              name=rs.getString("name");
+          
+            
+           }
+           con.close();
+          %>
   </head>
   <body>
+   
     <div class="title">
         <div class="ti-left">
             <div class="ti-icon">
                   <img src="../img/dog.png" alt="">
             </div>
             <div class="ti-txt">
-                <p>好友</p>
+                <p><%=name%>的好友
             </div>
 
         </div>
@@ -135,9 +159,28 @@
               <img src="../img/add-friend.png" alt="">
 
             </a>
-            
+            <%
+            if(session.getAttribute("memberAc")==null)
+                out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+            else
+                out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+          
+          %>
+                <%
+    }
+        }
+        catch (SQLException sExec) {
+               out.println("SQL錯誤"+sExec.toString());
+        }
+    }
+    catch (ClassNotFoundException err) {
+       out.println("class錯誤"+err.toString());
+    }
+        
+    %>
         </div>
     </div>
+    
     <!--好友欄位區-->
     <main>
         <div class="friendsline">
@@ -290,6 +333,7 @@
             </li>
         </a>   
     </ul>
+    
 </footer>
 
 

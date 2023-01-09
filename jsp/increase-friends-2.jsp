@@ -131,7 +131,7 @@
   <body>
     <div class="title">
         <div class="ti-icon">
-            <a href="../jsp/friends.jsp">
+            <a href="../html/friends.html">
               <img src="../img/left-arrow.png" alt="">
             </a>
             
@@ -157,11 +157,11 @@
                 </div>
         
                 <div class="in-name">
-                    <p><%=name%></p>
+                    <p>NianTing</p>
                 </div>
         
                 <div class="in-icon">
-                    <a href="../jsp/friends.jsp">
+                    <a href="../html/friends.html">
                         <div class="in-icon-pic">
                             <img src="../img/add-friend.png" alt="">
             
@@ -201,7 +201,7 @@
                 </li>
             </a>
             
-            <a href="../jsp/friends.jsp" class="navitem">
+            <a href="../html/friends.html" class="navitem">
                 <li>
                     <img src="../img/dog.png" alt="">
                     <p>好友</p>

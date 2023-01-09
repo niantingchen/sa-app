@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -182,7 +184,7 @@ footer{
                <div class="t-c-2-one">
                     <div class="t-c-2-o-pic">
                         <img src="../img/sport-car.png">
-                        <h6>跑車上路</h6>
+                        <h6><%=request.getParameter("name")%></h6>
                     </div>
                     <div class="t-c-2-o-text">
                         <div class="t-c-2-o-t-one">
@@ -202,7 +204,7 @@ footer{
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                                         </div>
                                         <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                            跑車上路<br>
+                                            <br>
                                             <div class="mb-3">
                                                 <label for="formGroupExampleInput" class="form-label" style="size: 20px;">車牌號碼</label>
                                                 <input type="text" class="form-control" id="formGroupExampleInput" placeholder="請輸入您的車牌號碼">
@@ -226,7 +228,7 @@ footer{
                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                                          </div>
                                          <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                             <b>跑車上路</b><br>
+                                             <b></b><br>
                                              開車時間2小時<br>
                                              扣除炭點10000點<br>
                                          </div><br>
@@ -235,132 +237,7 @@ footer{
                              </div>     
                     </div>
                 </div>
-                <div class="t-c-2-one">
-                    <div class="t-c-2-o-pic">
-                        <img src="../img/motorbike.png">
-                        <h6>重機上路</h6>
-                    </div>
-                    <div class="t-c-2-o-text">
-                        <div class="t-c-2-o-t-one">
-                            <div class="btn">
-                                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    開始使用
-                                </button>
-                                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal00">
-                                    結束使用
-                                </button>
-                            </div>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-                                        </div>
-                                        <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                            重機上路<br>
-                                            <div class="mb-3">
-                                                <label for="formGroupExampleInput" class="form-label" style="size: 20px;">車牌號碼</label>
-                                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="請輸入您的車牌號碼">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-dark">開始使用</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>     
-                        </div>                            
-                             <!-- Modal -->
-                             <div class="modal fade" id="exampleModal00" tabindex="-1" aria-labelledby="exampleModalLabel00" aria-hidden="true" >
-                                 <div class="modal-dialog modal-dialog-centered">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-                                         </div>
-                                         <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                             <b>重機上路</b><br>
-                                             騎車時間2小時<br>
-                                             扣除炭點7000點<br>
-                                         </div><br>
-                                     </div>
-                                 </div>
-                             </div>     
-                    </div>
-                </div>
-                <div class="t-c-2-one">
-                    <div class="t-c-2-o-pic">
-                        <img src="../img/grilling.png">
-                        <h6>炭烤烤肉</h6>
-                    </div>
-                    <div class="t-c-2-o-text">
-                        <div class="t-c-2-o-t-one">
-                            <div class="btn">
-                                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    開始使用
-                                </button>
-                                <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal00">
-                                    結束使用
-                                </button>
-                            </div>
-                            <!-- Modal -->
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-                                        </div>
-                                        <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                            炭烤烤肉<br>
-                                            <div class="mb-3">
-                                                <label for="formGroupExampleInput" class="form-label" style="size: 20px;">車牌號碼</label>
-                                                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="請輸入您的車牌號碼">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-dark">開始使用</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>     
-                        </div>                            
-                             <!-- Modal -->
-                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                                 <div class="modal-dialog modal-dialog-centered">
-                                     <div class="modal-content">
-                                         <div class="modal-header">
-                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-                                         </div>
-                                         <div class="modal-body" style=" text-align: center; size: 40px; ">
-                                             <b>炭烤烤肉</b><br>
-                                             烤肉時間3小時<br>
-                                             扣除炭點5000點<br>
-                                         </div><br>
-                                     </div>
-                                 </div>
-                             </div>     
-                    </div>
-                </div>
-            </div>
-            <!-- 頁籤的內容區塊 -->
-            <div class="tab-content-2">
-                <div class="t-c-2-one">
-                    <div class="t-c-2-o-pic">
-                        <img src="../img/grilling.png">
-                        <h6>炭烤烤肉</h6>
-                    </div>
-                    <div class="t-c-2-o-text2">
-
-                        <h2>烤肉時間3小時</h2><br>
-                        <h2>扣除炭點5000點</h2><br>                                                         
-                    </div>
-                </div>
-            </div>
-
-    <div >
-    </div>
-    </div>
-    </div>
+               
     <!--固定欄位-->
   <footer>         
     <ul class="nav1">

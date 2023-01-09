@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -205,7 +207,7 @@
         </div>
 
         <div class="shadow p-3 mb-5 bg-body rounded">
-            <a href="../html/increasewish.html">
+            <a href="../html/increase_wish.html">
                 <div class="increase">
                     <div class="increase-icon">
                         <img src="../img/add-2.png" alt="">

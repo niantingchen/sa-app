@@ -1,3 +1,5 @@
+<%@ page import = "java.sql.*"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +9,10 @@
     <link rel="icon" type="image/x-icon" href="../img/logo.png" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+    <!--下方固定欄位CSS-->
     <link rel="stylesheet" href="../css/footer.css">
+
     <title>我的許願罐</title>
 
     <style>
@@ -17,15 +22,26 @@
         }
 
         .title{
-            padding: 20px;
+            padding: 20px 50px 20px 50px;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             background-color: beige;
         }
         .ti-txt{
-            margin-top: 15px;
+            /*margin-top: 15px;*/
             font-size: 18px;
+            padding-left: 10px;
+        }
+        .ti-icon1{
+            margin-right: 30px;
+            padding-top: 20px;
+            display: flex;
+        }
+
+        .ti-icon1 a>img{
+            width: 30px;
+            height: 30px;
         }
         .icon>img{
             width: 40px;
@@ -93,44 +109,48 @@
             font-size: 18px;
         }
 
-        /*固定欄位*/
-      a{
-        text-decoration: none;
-        color: black;
-        /*background-color: #fff;*/
-    
-        }
-
-      footer{
-        padding: 20px;
-        background-color: beige;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        z-index: 2;
-            
-      }
-      .nav1{
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
-      .navitem{
-        width: 50px;
-        height: 50px;
-        background-color: cornsilk;
-        border-radius: 50%;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
+       
     </style>
   </head>
   <body>
+    <%
+    //jsp連接前端範例
+    request.setCharacterEncoding("UTF-8");
+                response.setCharacterEncoding("UTF-8");
+    try {
+    //Step 1: 載入資料庫驅動程式 
+        Class.forName("com.mysql.jdbc.Driver");
+        try {
+    //Step 2: 建立連線 	
+            String url="jdbc:mysql://127.0.0.1:3306/?serverTimezone=UTC";
+            String sql="";
+            Connection con=DriverManager.getConnection(url,"root","12345678");
+            if(con.isClosed())
+                out.println("連線建立失敗");
+            else {
+    //Step 3: 選擇資料庫   
+            sql="USE `question`";
+            con.createStatement().execute(sql);
+    //Step 4: 執行 SQL 指令, 若要操作記錄集, 需使用executeQuery, 才能傳回ResultSet	
+            sql="select * from wish";
+            PreparedStatement pstmt = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY );
+            ResultSet rs2=pstmt.executeQuery();
+    //先移到檔尾, getRow()後, 就可知道共有幾筆記錄
+            rs2.last();
+            int totalNo=rs2.getRow();
+            %>
     <div class="title">
-        <div class="ti-txt">
-          <p>我的許願罐</p>
+        <div class="ti-icon1">
+              <a href="../jsp/member.jsp">
+                <img src="../img/left-arrow.png" alt="">
+
+              </a>
+              <div class="ti-txt">
+                <p>我的許願罐</p>
+              </div>
+              
         </div>
+        
         <div class="icon">
           <img src="../img/jar2.png" alt="">
           
@@ -138,15 +158,21 @@
     </div>
 
     <main>
+        <%
+		sql="select * from `wish`";
+				rs2=con.createStatement().executeQuery(sql);
+				
+				while(rs2.next()){
+		%>
         <div class="shadow p-3 mb-5 bg-body rounded">
-            <a href="../html/wishdetail.html">
+            <a href="../jsp/wishdetail.jsp?name=<%=rs2.getString(2)%>&target=<%=rs2.getString(4)%>">
                 <div class="wi-name">
                     <div class="winame-left">
-                        <p>我不要重修SA</p>
+                        <p><%=rs2.getString(2)%></p>
                     </div>
                     <div class="winame-right">
-                        <span>$</span>
-                        <span>500</span>
+                        <span>目前點數：<br><%=rs2.getString(3)%></span>
+                       
                         <img src="../img/chevron.png" alt="">
                     </div>
                 </div>
@@ -160,7 +186,7 @@
                 </div>
                 <div class="goal">
                     <span>目標：</span>
-                    <span>1000</span>
+                    <span><%=rs2.getString(4)%></span>
                 </div>
             </div>
 
@@ -170,42 +196,22 @@
                   </div>
             </div>
         </div>
-
+        <%}	
+        //Step 6: 關閉連線
+                  con.close();
+                          }
+                       }
+                           catch (SQLException sExec) {
+                               out.println("SQL錯誤"+sExec.toString());
+                    }
+                }
+               catch (ClassNotFoundException err) {
+                  out.println("class錯誤"+err.toString());
+               }
+       
+               %>
         <div class="shadow p-3 mb-5 bg-body rounded">
-            <a href="../html/wishdetail.html">
-                <div class="wi-name">
-                    <div class="winame-left">
-                        <p>遊樂園</p>
-                    </div>
-                    <div class="winame-right">
-                        <span>$</span>
-                        <span>100</span>
-                        <img src="../img/chevron.png" alt="">
-                    </div>
-                </div>
-
-            </a>
-            
-
-            <div class="wi-goal">
-                <div class="cunru">
-                    <a href="../html/deposit.html">立即存入</a>
-                </div>
-                <div class="goal">
-                    <span>目標：</span>
-                    <span>500</span>
-                </div>
-            </div>
-
-            <div class="jindu">
-                <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                  </div>
-            </div>
-        </div>
-
-        <div class="shadow p-3 mb-5 bg-body rounded">
-            <a href="../html/increasewish.html">
+            <a href="increase_wish.jsp">
                 <div class="increase">
                     <div class="increase-icon">
                         <img src="../img/add-2.png" alt="">
@@ -221,8 +227,9 @@
 
 
     </main>
- <!--固定欄位-->
- <footer>         
+
+    <!--固定欄位-->
+  <footer>         
     <ul class="nav1">
         <a href="../index.jsp" class="navitem">
             <li>

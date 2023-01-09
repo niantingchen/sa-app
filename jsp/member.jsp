@@ -14,13 +14,7 @@
     <link rel="stylesheet" href="../css/footer.css">
 
     <title>member</title>
-    <%
-    if(session.getAttribute("memberid")==null)
-        out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
-    else
-        out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
-  
-  %>
+   
     <style>
       .title{
         padding: 20px 40px 15px 60px;
@@ -106,6 +100,9 @@
             justify-content: space-around;
             align-items: center;
         }
+        .h{
+           margin-left: 5px;
+        }
     </style>
      <%
      try{
@@ -117,13 +114,13 @@
      con.createStatement().execute(sql);
      %>
      <%	 
-       if(session.getAttribute("memberid") != null ){
-          sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+       if(session.getAttribute("memberAc") != null ){
+          sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
           ResultSet rs=con.createStatement().executeQuery(sql);
-          String  name="",memberid="";
+          String  name="",memberAc="";
           while(rs.next()){
              name=rs.getString("name");
-             memberid=rs.getString("memberid");
+             memberAc=rs.getString("memberAc");
            
           }
           con.close();
@@ -136,10 +133,19 @@
       <div class="icon">
         <a href="../html/cunzhe.html"><img src="../img/bear.png" alt="">會員</a>
       </div>
+      
       <div class="ti-txt">
         <p><%=name%> </p>
       </div>
+      
       <div class="icon">
+        <%
+        if(session.getAttribute("memberAc")==null)
+            out.print("<script>alert('請先登入 !');location.href='../html/login.html'</script>");
+        else
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
+      
+      %>
         <a href="../jsp/memberall.jsp"><img src="../img/setting.png" alt=""></a>
       </div>
     </div>
@@ -171,7 +177,7 @@
 
       <!--我的許願罐-->
       <div class="shadow p-3 mb-5 bg-body rounded">
-        <a href="../html/wish.html">
+        <a href="../jsp/wish.jsp">
           <div class="wish">
             <div class="wi-txt">
               <p>我的許願罐</p>
@@ -192,7 +198,7 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Name</th>
+              <th scope="col">name</th>
               <th scope="col">Points</th>
             </tr>
           </thead>
@@ -263,7 +269,7 @@ catch (ClassNotFoundException err) {
           </li>
       </a>
       
-      <a href="../html/friends.html" class="navitem">
+      <a href="../jsp/friends.jsp" class="navitem">
           <li>
               <img src="../img/dog.png" alt="">
               <p>好友</p>

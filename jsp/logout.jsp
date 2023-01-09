@@ -1,7 +1,7 @@
 
 <%
-session.removeAttribute("memberid");
+session.removeAttribute("memberAc");
 session.removeAttribute("name");
-session.removeAttribute("password");
+session.removeAttribute("memberPw");
 response.sendRedirect("../html/login.html") ;
 %>

@@ -9,17 +9,17 @@
         <meta name="author" content="" />
         <title>會員中心</title>
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="img/logo.jpg" />
+        <link rel="icon" type="image/x-icon" href="../img/logo.jpg" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/style_1.css" rel="stylesheet" />
+        <link href="../css/style_1.css" rel="stylesheet" />
 
         <%
-        if(session.getAttribute("memberid")==null)
-            out.println("<a class= 'h' href='login.html'>登入</a>");
+        if(session.getAttribute("memberAc")==null)
+            out.println("<a class= 'h' href='../html/login.html'>登入</a>");
         else
-            out.println("<a class= 'h' href='logout.jsp'>登出</a>");
+            out.println("<a class= 'h' href='../jsp/logout.jsp'>登出</a>");
       
       %>
     </head>
@@ -36,23 +36,9 @@
                         <li class="nav-item"><a class="nav-link" href="#!">商店</a></li>                             <!--商店導覽列-->
                         <li class="nav-item"><a class="nav-link" href="#!">首頁</a></li>                             <!--首頁導覽列-->
                         <li class="nav-item"><a class="nav-link" href="#!">會員</a></li>                             <!--會員導覽列-->
-                        <!--<li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>-->
+                        
                     </ul>
-                    <!--<form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
-                    </form>-->
+                    
                 </div>
             </div>
         </nav>
@@ -62,29 +48,36 @@ try{
 Class.forName("com.mysql.jdbc.Driver");
 try{
 String url="jdbc:mysql://localhost";
-Connection con=DriverManager.getConnection(url,"root","12345678");
+Connection con=DriverManager.getConnection(url,"root","1234");
 String sql="use question";
 con.createStatement().execute(sql);
 %>
 <%	 
   if(session.getAttribute("memberid") != null ){
-	 sql = "SELECT*FROM `member`WHERE `memberid`='"+session.getAttribute("memberid")+"'";
+	 sql = "SELECT*FROM `member`WHERE `memberAc`='"+session.getAttribute("memberAc")+"'";
 	 ResultSet rs=con.createStatement().executeQuery(sql);
 	 String  name="",memberid="",password="";
 	 while(rs.next()){
         name=rs.getString("name");
-		memberid=rs.getString("memberid");
-        password=rs.getString("password");		 
+		memberid=rs.getString("memberAc");
+        password=rs.getString("memberPw");		 
 	 }
 	 con.close();
 	%>
         <header class="bg-dark py-5">
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
-                    <img class="display-4 fw-bolder" src="img/logo.jpg">
-                    <p class="lead fw-normal text-white-50 mb-0"> <%=name%> </p> 
+                    <img class="display-4 fw-bolder" src="../img/logo.jpg">
+                    <%		   
+	sql = "SELECT * FROM `member` WHERE `memberid`= '"+session.getAttribute("memberid")+"'";
+	ResultSet rs1=con.createStatement().executeQuery(sql);
+	int a=0;
+	while(rs1.next()){
+%>
+                    <p class="lead fw-normal text-white-50 mb-0"> <%=rs1.getString("name")%> </p>
+                    <%}%> 
                     <div class="point">
-                        <p class="lead fw-normal-1 text-white-50 mb-0"><img class="display-7 fw-bolder" src="img/star.png">500<img class="display-8 fw-bolder" src="img/star.png"></p>
+                        <p class="lead fw-normal-1 text-white-50 mb-0"><img class="display-7 fw-bolder" src="../img/star.png">500<img class="display-8 fw-bolder" src="img/star.png"></p>
                     </div>
                 </div>
             </div>
@@ -118,206 +111,29 @@ catch (ClassNotFoundException err) {
                     <div class="col mb-5">
                         <div class="card h-100">
                             
-                            <a href="information.jsp"><input type="button" style="border:2px none; width: 100%;" value="個人資訊 &nbsp;>"></a>
-                            <!--Product image-->
-                            <!--<img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Fancy Product</h5>-->
-                                    <!-- Product price
-                                    $40.00 - $80.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>-->
+                            <a href="../jsp/information.jsp"><input type="button" style="border:2px none; width: 100%;" value="個人資訊 &nbsp;>"></a>
+                           
                         </div>
                     </div>
                     <div class="col mb-5">
                         <div class="card h-100">
-                            <a href="mycard.jsp"><input type="button" style="border:2px none; width: 100%;" value="我的卡片 &nbsp;>"></a>
-                             <!--Sale badge
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
-                            <!-- Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Special Item</h5>-->
-                                    <!-- Product reviews
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>-->
-                                    <!-- Product price
-                                    <span class="text-muted text-decoration-line-through">$20.00</span>
-                                    $18.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>-->
+                            <a href="../jsp/mycard.jsp"><input type="button" style="border:2px none; width: 100%;" value="我的卡片 &nbsp;>"></a>
+                            
                         </div>
                     </div>
                     <div class="col mb-5">
                         <div class="card h-100">
-                            <a href="question.html"><input type="button" style="border:2px none; width: 100%;" value="常見問題 &nbsp;>"></a>
-                            <!-- Sale badge
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
-                            <!-- Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Sale Item</h5>-->
-                                    <!-- Product price
-                                    <span class="text-muted text-decoration-line-through">$50.00</span>
-                                    $25.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>-->
+                            <a href="../html/question.html"><input type="button" style="border:2px none; width: 100%;" value="常見問題 &nbsp;>"></a>
+                            
                         </div>
                     </div>
                     <div class="col mb-5">
                         <!--<div class="card h-100">-->
-                            <a href="contactus.html"><input type="button" style="border:2px none; width: 100%;" value="聯絡我們 &nbsp;>"></a>
-                             <!--Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Popular Item</h5>-->
-                                    <!-- Product reviews
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>-->
-                                    <!-- Product price
-                                    $40.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>-->
+                            <a href="../html/contactus.html"><input type="button" style="border:2px none; width: 100%;" value="聯絡我們 &nbsp;>"></a>
+                            
                     </div>
                    
-                         <!--<div class="card h-100">
-                             Sale badge
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
-                            <!-- Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Sale Item</h5>-->
-                                    <!-- Product price
-                                    <span class="text-muted text-decoration-line-through">$50.00</span>
-                                    $25.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>
-                    </div>-->
-                    <!--<div class="col mb-5">
-                        <div class="card h-100">
-                             Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Fancy Product</h5>-->
-                                    <!-- Product price
-                                    $120.00 - $280.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">View options</a></div>
-                            </div>
-                        </div>
-                    </div>-->
-                     <!--<div class="col mb-5">
-                        <div class="card h-100">
-                            Sale badge
-                            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>-->
-                            <!-- Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Special Item</h5>-->
-                                    <!-- Product reviews
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>-->
-                                    <!-- Product price
-                                    <span class="text-muted text-decoration-line-through">$20.00</span>
-                                    $18.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>
-                    </div>-->
-                    <!--<div class="col mb-5">
-                        <div class="card h-100">
-                             Product image
-                            <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />-->
-                            <!-- Product details
-                            <div class="card-body p-4">
-                                <div class="text-center">-->
-                                    <!-- Product name
-                                    <h5 class="fw-bolder">Popular Item</h5>-->
-                                    <!-- Product reviews
-                                    <div class="d-flex justify-content-center small text-warning mb-2">
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                        <div class="bi-star-fill"></div>
-                                    </div>-->
-                                    <!-- Product price
-                                    $40.00
-                                </div>
-                            </div>-->
-                            <!-- Product actions
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
+                        
         </section>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
